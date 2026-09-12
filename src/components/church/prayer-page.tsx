@@ -18,6 +18,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { FadeIn } from './fade-in';
 import { PageHeader } from './section-heading';
+import { PrayerWall } from './prayer-wall';
 
 export function PrayerPage() {
   const { t } = useSite();
@@ -248,6 +249,8 @@ export function PrayerPage() {
           </div>
         </div>
       </section>
+
+      <PrayerWall />
     </>
   );
 }

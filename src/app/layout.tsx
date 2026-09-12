@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/church/theme-provider";
 import { CHURCH } from "@/lib/site";
 
 // Both fonts fully support Cyrillic (Russian + Tajik).
@@ -90,7 +91,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${manrope.variable} antialiased bg-background text-foreground`}
       >
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
         <Toaster position="top-center" richColors />
         <script
           type="application/ld+json"

@@ -2,6 +2,7 @@
 
 import {
   ArrowRight,
+  CalendarPlus,
   Clock,
   Heart,
   Lightbulb,
@@ -9,6 +10,13 @@ import {
   Phone,
 } from 'lucide-react';
 import { useSite } from '@/lib/i18n';
+import {
+  nextOccurrence,
+  parseTimeRange,
+  SCHEDULE_WEEKDAYS,
+  type LocalizedEvent,
+} from '@/lib/events';
+import { buildEventIcs, downloadIcs } from '@/lib/ics';
 import { CHURCH } from '@/lib/site';
 import { MapEmbed } from './map-embed';
 import { FadeIn } from './fade-in';
@@ -20,6 +28,21 @@ export function SchedulePage() {
   const go = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     navigate('contact');
+  };
+
+  const addToCalendar = (index: number, title: string) => {
+    const item = t.schedule.weekly.items[index];
+    const { start, duration } = parseTimeRange(item.time);
+    const synthetic: LocalizedEvent = {
+      id: `schedule-${index}`,
+      date: nextOccurrence(SCHEDULE_WEEKDAYS[index] ?? 5, start),
+      time: start,
+      category: 'worship',
+      title,
+      description: item.desc,
+    };
+    const ics = buildEventIcs(synthetic, duration, CHURCH.addressFull, window.location.origin);
+    downloadIcs(`adventist-dushanbe-${title.toLowerCase().replace(/\s+/g, '-')}.ics`, ics);
   };
 
   return (
@@ -54,6 +77,15 @@ export function SchedulePage() {
                       <span className="rounded-full bg-muted px-3 py-1 text-xs font-bold text-primary">
                         {item.time}
                       </span>
+                      <button
+                        type="button"
+                        onClick={() => addToCalendar(i, item.title)}
+                        aria-label={`${t.common.addToCalendar}: ${item.title}`}
+                        title={t.common.addToCalendar}
+                        className="ml-auto flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-gold-soft hover:text-gold-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      >
+                        <CalendarPlus className="h-4 w-4" aria-hidden="true" />
+                      </button>
                     </div>
                     <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-gold-ink">
                       {item.day}

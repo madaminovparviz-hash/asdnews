@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Church, Menu, X } from 'lucide-react';
 import { PAGES, useSite, type Lang, type PageId } from '@/lib/i18n';
+import { ThemeToggle } from './theme-toggle';
 import { cn } from '@/lib/utils';
 
 const LANGS: Lang[] = ['ru', 'tj'];
@@ -109,6 +110,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <LanguageSwitcher />
           <button
             type="button"

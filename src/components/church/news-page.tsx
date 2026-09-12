@@ -22,6 +22,7 @@ import {
 } from '@/lib/events';
 import { FadeIn } from './fade-in';
 import { PageHeader } from './section-heading';
+import { AddToCalendarButton } from './add-to-calendar-button';
 import { cn } from '@/lib/utils';
 
 function EventShareButton({ event }: { event: LocalizedEvent }) {
@@ -81,7 +82,10 @@ function EventRow({ event, compact }: { event: LocalizedEvent; compact?: boolean
           {t.news.categories[event.category]}
         </span>
       </div>
-      <EventShareButton event={event} />
+      <div className="flex shrink-0 flex-col gap-1">
+        <EventShareButton event={event} />
+        <AddToCalendarButton event={event} />
+      </div>
     </div>
   );
 }
@@ -262,7 +266,10 @@ function UpcomingList() {
                   {t.news.categories[ev.category]}
                 </span>
               </div>
-              <EventShareButton event={ev} />
+              <div className="flex shrink-0 flex-col gap-1">
+                <EventShareButton event={ev} />
+                <AddToCalendarButton event={ev} />
+              </div>
             </div>
           </li>
         ))}

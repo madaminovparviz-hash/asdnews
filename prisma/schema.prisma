@@ -9,11 +9,12 @@ datasource db {
 
 // Prayer request submitted from the "Молитвенные нужды" page.
 model PrayerRequest {
-  id        String   @id @default(cuid())
-  name      String?
-  request   String
-  isPrivate Boolean  @default(true)
-  createdAt DateTime @default(now())
+  id         String   @id @default(cuid())
+  name       String?
+  request    String
+  isPrivate  Boolean  @default(true)
+  prayedCount Int     @default(0)
+  createdAt  DateTime @default(now())
 }
 
 // Feedback message submitted from the "Контакты" page.

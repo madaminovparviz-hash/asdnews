@@ -59,7 +59,7 @@ function NextServiceCard() {
   };
 
   return (
-    <div className="rounded-3xl border border-white/60 bg-white/85 p-6 shadow-[0_24px_70px_-30px_rgba(34,49,63,0.5)] backdrop-blur-md md:p-7">
+    <div className="rounded-3xl border border-border/70 bg-card/85 p-6 shadow-[0_24px_70px_-30px_rgba(34,49,63,0.5)] backdrop-blur-md md:p-7">
       <div className="flex items-center justify-between gap-3">
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-gold-ink">
           {t.home.nextService.title}
@@ -264,7 +264,7 @@ export function HomePage() {
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {t.home.sermons.items.map((sermon, i) => (
             <FadeIn key={sermon.title} delay={i * 120}>
-              <article className="group h-full overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <article className="group h-full overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold/40 hover:shadow-lg">
                 <div className="relative aspect-[3/2] overflow-hidden">
                   <Image
                     src={sermonImages[i]}
@@ -388,7 +388,7 @@ export function HomePage() {
       {/* ---------- CTA ---------- */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
         <FadeIn>
-          <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-[#4A7BA6] p-8 shadow-xl md:p-12">
+          <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-[#4A7BA6] p-8 shadow-xl dark:from-[#274C69] dark:to-[#18314a] md:p-12">
             <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
               <div className="max-w-xl">
                 <h2 className="font-display text-2xl font-bold text-white md:text-3xl">

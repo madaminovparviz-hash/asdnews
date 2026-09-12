@@ -97,7 +97,7 @@ export function AboutPage() {
             const Icon = BELIEF_ICONS[i % BELIEF_ICONS.length];
             return (
               <FadeIn key={belief.title} delay={(i % 3) * 100}>
-                <article className="h-full rounded-3xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                <article className="h-full rounded-3xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold/40 hover:shadow-md">
                   <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gold-soft text-gold-ink">
                     <Icon className="h-6 w-6" aria-hidden="true" />
                   </span>
@@ -117,7 +117,7 @@ export function AboutPage() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {t.about.team.members.map((member, i) => (
               <FadeIn key={member.name} delay={i * 100}>
-                <article className="h-full rounded-3xl border border-border bg-card p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                <article className="h-full rounded-3xl border border-border bg-card p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold/40 hover:shadow-md">
                   <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 font-display text-xl font-extrabold text-primary ring-2 ring-gold/50">
                     {member.name
                       .split(' ')

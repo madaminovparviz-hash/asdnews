@@ -93,24 +93,24 @@ const SPECIAL: SpecialEvent[] = [
 
 export const CATEGORY_STYLES: Record<EventCategory, { dot: string; chip: string }> = {
   worship: {
-    dot: 'bg-[#2F5A7C]',
-    chip: 'border-[#2F5A7C]/25 bg-[#2F5A7C]/10 text-[#2F5A7C]',
+    dot: 'bg-[#2F5A7C] dark:bg-[#9FC1DC]',
+    chip: 'border-[#2F5A7C]/25 bg-[#2F5A7C]/10 text-[#2F5A7C] dark:border-[#9FC1DC]/30 dark:bg-[#9FC1DC]/10 dark:text-[#B7D2E7]',
   },
   community: {
-    dot: 'bg-[#C29B40]',
-    chip: 'border-[#C29B40]/30 bg-[#C29B40]/15 text-[#7A611F]',
+    dot: 'bg-[#C29B40] dark:bg-[#D8B25B]',
+    chip: 'border-[#C29B40]/30 bg-[#C29B40]/15 text-[#7A611F] dark:border-[#D8B25B]/35 dark:bg-[#D8B25B]/10 dark:text-[#E7CD96]',
   },
   youth: {
-    dot: 'bg-[#4E8D6E]',
-    chip: 'border-[#4E8D6E]/25 bg-[#4E8D6E]/10 text-[#3A6B52]',
+    dot: 'bg-[#4E8D6E] dark:bg-[#7DBB9C]',
+    chip: 'border-[#4E8D6E]/25 bg-[#4E8D6E]/10 text-[#3A6B52] dark:border-[#7DBB9C]/30 dark:bg-[#7DBB9C]/10 dark:text-[#A3D0B8]',
   },
   children: {
-    dot: 'bg-[#C87A3C]',
-    chip: 'border-[#C87A3C]/25 bg-[#C87A3C]/10 text-[#96591F]',
+    dot: 'bg-[#C87A3C] dark:bg-[#E0A26B]',
+    chip: 'border-[#C87A3C]/25 bg-[#C87A3C]/10 text-[#96591F] dark:border-[#E0A26B]/30 dark:bg-[#E0A26B]/10 dark:text-[#EBBE93]',
   },
   mercy: {
-    dot: 'bg-[#B05F5F]',
-    chip: 'border-[#B05F5F]/25 bg-[#B05F5F]/10 text-[#8A4646]',
+    dot: 'bg-[#B05F5F] dark:bg-[#D39393]',
+    chip: 'border-[#B05F5F]/25 bg-[#B05F5F]/10 text-[#8A4646] dark:border-[#D39393]/30 dark:bg-[#D39393]/10 dark:text-[#E3B4B4]',
   },
 };
 
@@ -197,6 +197,38 @@ export function getUpcomingEvents(count: number, t: Translation, from: Date = st
 
 export function formatEventDate(date: Date, t: Translation): string {
   return `${date.getDate()} ${t.common.monthsGenitive[date.getMonth()]}`;
+}
+
+/** Approximate duration (minutes) per event type — used for .ics exports. */
+export function getEventDuration(event: LocalizedEvent): number {
+  const recMatch = /-rec-(\d)$/.exec(event.id);
+  if (recMatch) return [75, 90, 60, 120][Number(recMatch[1])] ?? 90;
+  return 90; // special gatherings
+}
+
+/** Weekday (0=Mon … 6=Sun) of each schedule item, matching RECURRING order. */
+export const SCHEDULE_WEEKDAYS = [5, 5, 2, 4];
+
+/** Start time ("09:00") and duration (minutes) parsed from a "09:00 – 10:15" range. */
+export function parseTimeRange(range: string): { start: string; duration: number } {
+  const parts = range.split('–').map((s) => s.trim());
+  const start = parts[0] ?? range;
+  const toMin = (t: string) => {
+    const [h, m] = t.split(':').map(Number);
+    return h * 60 + m;
+  };
+  const duration = parts[1] ? Math.max(30, toMin(parts[1]) - toMin(start)) : 90;
+  return { start, duration };
+}
+
+/** Next date (today included) on which the given weekday falls. */
+export function nextOccurrence(weekday: number, time: string, from: Date = new Date()): Date {
+  const d = new Date(from);
+  d.setHours(Number(time.split(':')[0]), Number(time.split(':')[1] ?? 0), 0, 0);
+  let delta = (weekday - ((d.getDay() + 6) % 7) + 7) % 7;
+  if (delta === 0 && d.getTime() <= from.getTime()) delta = 7;
+  d.setDate(d.getDate() + delta);
+  return d;
 }
 
 export { dayKey };

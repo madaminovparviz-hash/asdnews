@@ -74,3 +74,22 @@ Work Log:
 Stage Summary:
 - VERIFIED WORKING: all 7 pages × both languages, both API forms persisting to SQLite with spam protection, calendar/accordion/countdown interactive, responsive mobile+desktop, WCAG-oriented semantics (skip link, aria-current, aria-pressed, labels, roles).
 - Known cosmetic items for next round: OpenStreetMap iframe depends on external network (graceful if blocked); social links are placeholders; header nav hidden below xl (hamburger below that by design).
+
+---
+Task ID: cron-round-2
+Agent: Z.ai Code (webDevReview)
+Task: QA assessment + new features (dark mode, prayer wall, .ics calendar) + styling details.
+
+Work Log:
+- QA sweep: all 7 pages × RU/TJ via agent-browser — no page errors, APIs healthy (prayer POST 400 on empty input as designed), palette confirmed live.
+- FEATURE — Prayer wall: added `prayedCount` to PrayerRequest (db:push OK); new GET /api/prayer/public (latest 12 non-private, rate-limited) and POST /api/prayer/[id]/pray (increments counter, 404 for private, rate-limited 60/h/IP). New PrayerWall component on the prayer page: public requests as quote cards (name or localized "guest", date, gold heart button with count), optimistic update + one-vote guard via localStorage('prayed-ids'), refresh button, empty state, privacy note. Fully translated RU (Молитвенная стена) / TJ (Девори дуо).
+- FEATURE — Dark mode: next-themes ThemeProvider (attribute=class, default light, persisted 'theme' in localStorage); Sun/Moon toggle in header next to RU|TJ; refined .dark palette in globals.css; dark: variants added for event category chips, home CTA band, hero glass card (bg-card/85 + border-border/70); FAQ/CTA primary surfaces ride on CSS vars automatically. Verified toggle + persistence + visuals by screenshot.
+- FEATURE — Add to calendar: src/lib/ics.ts builds valid iCalendar (floating local time, escaped text, UID, location, URL) + client-side download; AddToCalendarButton on news-page event rows & upcoming list and on schedule-page weekly cards (next-occurrence dates via nextOccurrence(), durations parsed from time ranges via parseTimeRange()). Unit-verified output (DTSTART 09:00 → DTEND 10:30/10:15) and in-browser blob capture (446-byte VCALENDAR, correct filename).
+- Styling details: gold hover borders on sermon/belief/team cards; radial gold glow ornament on every PageHeader; new ScrollToTop floating button (appears >700px, localized aria-label); events.ts gained SCHEDULE_WEEKDAYS/parseTimeRange/nextOccurrence/getEventDuration helpers.
+- Fixed during verification: dev server served stale Prisma client after schema change (Unknown field prayedCount) → restarted `bun run dev`; agent-browser "errors" ✗ artifacts traced to headless download interception, not page errors (fresh session = clean).
+- Final: `bun run lint` clean; GET / 200; /api/prayer/public 200; wall E2E: public submit → wall card → pray click → toast "Спасибо за молитву!" → button disabled → DB prayedCount=1.
+
+Stage Summary:
+- Site now has: dark/light theme, community prayer wall with engagement counter, calendar exports, scroll-to-top — all bilingual.
+- Unresolved/risks: 1) auto-refetch of the wall after a new public submission is NOT wired (user must refresh/navigate back — acceptable, refresh button exists; consider invalidation next round); 2) headless downloads can't be visually confirmed in agent-browser (logic unit+blob verified); 3) OSM map iframe depends on external network.
+- Next-round ideas: newsletter subscribe (footer) with DB model; admin mini-panel for pastor (read prayer/contact submissions, passphrase-protected); auto-refresh wall after submit; image lightbox gallery; PWA manifest.

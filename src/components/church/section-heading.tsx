@@ -53,8 +53,16 @@ interface PageHeaderProps {
 /** Decorative page banner used at the top of every inner page. */
 export function PageHeader({ title, subtitle }: PageHeaderProps) {
   return (
-    <section className="border-b border-border/70 bg-secondary/50">
-      <div className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 md:py-16 lg:px-8">
+    <section className="relative overflow-hidden border-b border-border/70 bg-secondary/50">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(560px 200px at 50% -60px, rgba(194,155,64,0.14), transparent 70%)',
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 md:py-16 lg:px-8">
         <h1 className="mx-auto max-w-3xl font-display text-3xl font-extrabold leading-tight tracking-tight text-foreground md:text-5xl">
           {title}
         </h1>
