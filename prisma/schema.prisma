@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Prayer request submitted from the "Молитвенные нужды" page.
+model PrayerRequest {
+  id        String   @id @default(cuid())
+  name      String?
+  request   String
+  isPrivate Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+// Feedback message submitted from the "Контакты" page.
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  createdAt DateTime @default(now())
+}
