@@ -9,6 +9,7 @@ import { AboutPage } from '@/components/church/about-page';
 import { SchedulePage } from '@/components/church/schedule-page';
 import { NewsPage } from '@/components/church/news-page';
 import { FaqPage } from '@/components/church/faq-page';
+import { OneVoicePage } from '@/components/church/onevoice-page';
 import { PrayerPage } from '@/components/church/prayer-page';
 import { ContactPage } from '@/components/church/contact-page';
 import { ScrollToTop } from '@/components/church/scroll-to-top';
@@ -18,6 +19,7 @@ const PAGE_COMPONENTS: Record<PageId, () => React.JSX.Element> = {
   about: AboutPage,
   schedule: SchedulePage,
   news: NewsPage,
+  onevoice: OneVoicePage,
   faq: FaqPage,
   prayer: PrayerPage,
   contact: ContactPage,

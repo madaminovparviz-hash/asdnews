@@ -11,9 +11,9 @@ import { ru, type Translation } from './ru';
 import { tj } from './tj';
 
 export type Lang = 'ru' | 'tj';
-export type PageId = 'home' | 'about' | 'schedule' | 'news' | 'faq' | 'prayer' | 'contact';
+export type PageId = 'home' | 'about' | 'schedule' | 'news' | 'onevoice' | 'faq' | 'prayer' | 'contact';
 
-export const PAGES: PageId[] = ['home', 'about', 'schedule', 'news', 'faq', 'prayer', 'contact'];
+export const PAGES: PageId[] = ['home', 'about', 'schedule', 'news', 'onevoice', 'faq', 'prayer', 'contact'];
 
 const DICTS: Record<Lang, Translation> = { ru, tj };
 

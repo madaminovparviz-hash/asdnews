@@ -94,11 +94,18 @@ export function SiteHeader() {
               className={cn(
                 'relative rounded-full px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                 page === id
-                  ? 'text-primary'
-                  : 'text-foreground/70 hover:bg-muted hover:text-foreground',
+                  ? 'text-primary font-semibold'
+                  : id === 'onevoice'
+                    ? 'text-gold-ink font-semibold hover:bg-gold-soft'
+                    : 'text-foreground/70 hover:bg-muted hover:text-foreground',
               )}
             >
-              {t.nav[id]}
+              <span className="flex items-center gap-1.5">
+                {id === 'onevoice' && (
+                  <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" aria-hidden="true" />
+                )}
+                {t.nav[id]}
+              </span>
               {page === id && (
                 <span
                   aria-hidden="true"
@@ -142,11 +149,18 @@ export function SiteHeader() {
                   className={cn(
                     'flex min-h-[44px] items-center justify-between rounded-xl px-4 py-2.5 text-[15px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                     page === id
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-foreground/80 hover:bg-muted',
+                      ? 'bg-primary/10 text-primary font-semibold'
+                      : id === 'onevoice'
+                        ? 'bg-gold-soft/50 text-gold-ink font-semibold'
+                        : 'text-foreground/80 hover:bg-muted',
                   )}
                 >
-                  {t.navLong[id]}
+                  <span className="flex items-center gap-2">
+                    {id === 'onevoice' && (
+                      <span className="h-2 w-2 rounded-full bg-gold animate-pulse" aria-hidden="true" />
+                    )}
+                    {t.navLong[id]}
+                  </span>
                   <span
                     aria-hidden="true"
                     className={cn('h-2 w-2 rounded-full', page === id ? 'bg-gold' : 'bg-transparent')}

@@ -7,11 +7,13 @@ import {
   CalendarDays,
   Clock,
   MapPin,
+  Play,
   Quote,
+  Radio,
   Sunrise,
   Timer,
 } from 'lucide-react';
-import { useSite } from '@/lib/i18n';
+import { useSite, type PageId } from '@/lib/i18n';
 import { CATEGORY_STYLES, formatEventDate, getUpcomingEvents } from '@/lib/events';
 import { CHURCH } from '@/lib/site';
 import { FadeIn } from './fade-in';
@@ -122,7 +124,7 @@ function NextServiceCard() {
 
 export function HomePage() {
   const { t, navigate } = useSite();
-  const go = (id: 'schedule' | 'about' | 'news' | 'contact') => (
+  const go = (id: PageId) => (
     e: React.MouseEvent<HTMLAnchorElement>,
   ) => {
     e.preventDefault();
@@ -252,6 +254,50 @@ export function HomePage() {
             </FadeIn>
           </div>
         </div>
+      </section>
+
+      {/* ---------- One Voice 2027 Banner ---------- */}
+      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <FadeIn>
+          <div className="relative overflow-hidden rounded-3xl border border-gold/40 bg-navy p-7 text-white shadow-2xl md:p-10">
+            <div className="absolute inset-0 z-0">
+              <Image
+                src="/images/onevoice.jpg"
+                alt={t.onevoice.heroTitle}
+                fill
+                sizes="(min-width: 1280px) 1200px, 100vw"
+                className="object-cover object-center opacity-25 mix-blend-luminosity"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/70" />
+            </div>
+
+            <div className="relative z-10 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+              <div className="max-w-2xl">
+                <span className="inline-flex items-center gap-2 rounded-full border border-gold/50 bg-gold/15 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.16em] text-gold">
+                  <Radio className="h-3.5 w-3.5 animate-pulse" aria-hidden="true" />
+                  {t.onevoice.badge}
+                </span>
+                <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
+                  {t.onevoice.heroTitle}
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-white/80 sm:text-base">
+                  {t.onevoice.heroSubtitle}
+                </p>
+              </div>
+
+              <div className="flex shrink-0 flex-wrap items-center gap-3">
+                <a
+                  href="#/onevoice"
+                  onClick={go('onevoice')}
+                  className="inline-flex min-h-[46px] items-center gap-2 rounded-full bg-gold px-6 text-sm font-bold text-[#22435F] shadow-lg transition-all hover:bg-gold-light hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                >
+                  <Play className="h-4 w-4 fill-current" aria-hidden="true" />
+                  {t.onevoice.watchVideo}
+                </a>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
       </section>
 
       {/* ---------- Sermons ---------- */}

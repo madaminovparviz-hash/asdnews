@@ -71,16 +71,18 @@ export function PrayerWall() {
       return next;
     });
     setItems((cur) =>
-      cur?.map((it) => (it.id === id ? { ...it, prayedCount: it.prayedCount + 1 } : it)),
+      cur ? cur.map((it) => (it.id === id ? { ...it, prayedCount: it.prayedCount + 1 } : it)) : null,
     );
     try {
       const res = await fetch(`/api/prayer/${encodeURIComponent(id)}/pray`, { method: 'POST' });
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error('failed');
       setItems((cur) =>
-        cur?.map((it) =>
-          it.id === id ? { ...it, prayedCount: data.prayedCount as number } : it,
-        ),
+        cur
+          ? cur.map((it) =>
+              it.id === id ? { ...it, prayedCount: data.prayedCount as number } : it,
+            )
+          : null,
       );
       toast.success(wall.thanks);
     } catch {
