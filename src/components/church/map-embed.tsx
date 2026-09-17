@@ -9,7 +9,7 @@ interface MapEmbedProps {
 }
 
 /**
- * OpenStreetMap embed — no API key required, lazy-loaded.
+ * Yandex Maps embed — no API key required for widget iframe, lazy-loaded.
  * A text link below keeps the address reachable without iframes.
  */
 export function MapEmbed({ title, linkLabel, className }: MapEmbedProps) {

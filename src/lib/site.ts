@@ -10,5 +10,5 @@ export const CHURCH = {
   geo: { lat: 38.5663, lng: 68.8305 },
 } as const;
 
-export const MAP_EMBED_SRC = `https://www.openstreetmap.org/export/embed.html?bbox=${CHURCH.geo.lng - 0.026}%2C${CHURCH.geo.lat - 0.014}%2C${CHURCH.geo.lng + 0.026}%2C${CHURCH.geo.lat + 0.014}&layer=mapnik&marker=${CHURCH.geo.lat}%2C${CHURCH.geo.lng}`;
-export const MAP_DIRECTIONS_URL = `https://www.openstreetmap.org/?mlat=${CHURCH.geo.lat}&mlon=${CHURCH.geo.lng}#map=17/${CHURCH.geo.lat}/${CHURCH.geo.lng}`;
+export const MAP_EMBED_SRC = `https://yandex.ru/map-widget/v1/?ll=${CHURCH.geo.lng}%2C${CHURCH.geo.lat}&z=16&pt=${CHURCH.geo.lng},${CHURCH.geo.lat},pm2rdm`;
+export const MAP_DIRECTIONS_URL = `https://yandex.ru/maps/?pt=${CHURCH.geo.lng},${CHURCH.geo.lat}&z=16&l=map`;
