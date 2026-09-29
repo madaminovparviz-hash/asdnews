@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Church, Menu, X } from 'lucide-react';
+import Image from 'next/image';
+import { Menu, X } from 'lucide-react';
 import { PAGES, useSite, type Lang, type PageId } from '@/lib/i18n';
 import { ThemeToggle } from './theme-toggle';
 import { cn } from '@/lib/utils';
@@ -70,8 +71,15 @@ export function SiteHeader() {
           aria-label={`${t.meta.brand} ${t.meta.brandCity}`}
           className="flex items-center gap-3 rounded-xl transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm md:h-11 md:w-11">
-            <Church className="h-5 w-5" aria-hidden="true" />
+          <span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white p-1 shadow-sm ring-1 ring-border/40 md:h-11 md:w-11">
+            <Image
+              src="/images/logo-badge.png"
+              alt={t.meta.brand}
+              width={44}
+              height={44}
+              className="h-full w-full object-contain"
+              priority
+            />
           </span>
           <span className="flex min-w-0 flex-col leading-tight">
             <span className="line-clamp-2 max-w-[11rem] font-display text-[13px] font-bold tracking-tight text-foreground md:max-w-none md:text-[15px]">

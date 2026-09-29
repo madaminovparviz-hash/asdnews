@@ -1,6 +1,7 @@
 'use client';
 
-import { Church, Clock, Heart, Mail, MapPin, Phone, Send, Instagram, Youtube } from 'lucide-react';
+import Image from 'next/image';
+import { Clock, Heart, Mail, MapPin, Phone, Send, Instagram, Youtube } from 'lucide-react';
 import { PAGES, useSite, type PageId } from '@/lib/i18n';
 import { CHURCH } from '@/lib/site';
 
@@ -29,8 +30,14 @@ export function SiteFooter() {
               onClick={go('home')}
               className="flex w-fit items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 ring-1 ring-gold/60">
-                <Church className="h-5 w-5 text-gold" aria-hidden="true" />
+              <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white p-1 ring-1 ring-gold/60 shadow-md">
+                <Image
+                  src="/images/logo-badge.png"
+                  alt={t.meta.brand}
+                  width={44}
+                  height={44}
+                  className="h-full w-full object-contain"
+                />
               </span>
               <span className="flex flex-col leading-tight">
                 <span className="font-display text-sm font-bold">{t.meta.brand}</span>
