@@ -1,8 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
 import {
-  CheckCircle2,
   Clock,
   Copy,
   Mail,
@@ -14,74 +12,17 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useSite } from '@/lib/i18n';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { MapEmbed } from './map-embed';
 import { FadeIn } from './fade-in';
 import { PageHeader } from './section-heading';
 import { CHURCH } from '@/lib/site';
+import { WhatsappIcon } from './messenger-icons';
 
-const SOCIAL_ICONS = { Telegram: Send, Instagram, YouTube: Youtube } as const;
+const SOCIAL_ICONS = { Telegram: Send, WhatsApp: WhatsappIcon, Instagram, YouTube: Youtube } as const;
 
 export function ContactPage() {
   const { t } = useSite();
-  const form = t.contact.form;
   const c = t.common;
-
-  const mountedAt = useRef(Date.now());
-  const [values, setValues] = useState({ name: '', email: '', phone: '', message: '' });
-  const [honeypot, setHoneypot] = useState('');
-  const [errors, setErrors] = useState<Partial<Record<'name' | 'email' | 'message', string>>>({});
-  const [sending, setSending] = useState(false);
-  const [done, setDone] = useState(false);
-
-  const set = (key: keyof typeof values) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => setValues((v) => ({ ...v, [key]: e.target.value }));
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const nextErrors: typeof errors = {};
-    if (values.name.trim().length < 2) nextErrors.name = c.required;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) nextErrors.email = c.invalidEmail;
-    if (values.message.trim().length < 10) nextErrors.message = c.tooShort;
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
-
-    setSending(true);
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...values,
-          website: honeypot,
-          elapsedMs: Date.now() - mountedAt.current,
-        }),
-      });
-      if (res.status === 429) {
-        toast.error(c.errorRate);
-        return;
-      }
-      if (!res.ok) {
-        toast.error(c.errorGeneric);
-        return;
-      }
-      setDone(true);
-    } catch {
-      toast.error(c.errorGeneric);
-    } finally {
-      setSending(false);
-    }
-  };
-
-  const reset = () => {
-    setValues({ name: '', email: '', phone: '', message: '' });
-    mountedAt.current = Date.now();
-    setDone(false);
-  };
 
   const copyPhone = async () => {
     await navigator.clipboard.writeText(CHURCH.phoneDisplay);
@@ -147,137 +88,47 @@ export function ContactPage() {
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-20 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-2">
           <FadeIn>
-            <div className="rounded-3xl border border-border bg-card p-6 shadow-sm md:p-8">
-              {done ? (
-                <div className="flex min-h-[420px] flex-col items-center justify-center text-center">
-                  <span className="flex h-20 w-20 items-center justify-center rounded-full bg-gold-soft">
-                    <CheckCircle2 className="h-10 w-10 text-gold-ink" aria-hidden="true" />
-                  </span>
-                  <h2 className="mt-5 font-display text-2xl font-bold text-foreground">
-                    {form.successTitle}
-                  </h2>
-                  <p className="mt-2 max-w-sm leading-relaxed text-muted-foreground">
-                    {form.successText}
-                  </p>
-                  <Button onClick={reset} variant="outline" className="mt-6 rounded-full">
-                    {form.sendAnother}
-                  </Button>
-                </div>
-              ) : (
-                <>
-                  <h2 className="font-display text-xl font-bold text-foreground md:text-2xl">
-                    {form.title}
-                  </h2>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{form.desc}</p>
-                  <form onSubmit={submit} className="mt-6 space-y-5" noValidate>
-                    <div aria-hidden="true" className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">
-                      <label htmlFor="contact-website">Website</label>
-                      <input
-                        id="contact-website"
-                        type="text"
-                        tabIndex={-1}
-                        autoComplete="off"
-                        value={honeypot}
-                        onChange={(e) => setHoneypot(e.target.value)}
-                      />
-                    </div>
+            <div className="flex h-full flex-col justify-center rounded-3xl border border-border bg-card p-6 shadow-sm md:p-10">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gold-soft text-gold-ink">
+                <Send className="h-6 w-6" aria-hidden="true" />
+              </span>
 
-                    <div className="grid gap-5 sm:grid-cols-2">
-                      <div className="space-y-2">
-                        <Label htmlFor="contact-name">{form.nameLabel}</Label>
-                        <Input
-                          id="contact-name"
-                          required
-                          value={values.name}
-                          onChange={set('name')}
-                          placeholder={form.namePlaceholder}
-                          maxLength={80}
-                          autoComplete="name"
-                          aria-invalid={Boolean(errors.name)}
-                          aria-describedby={errors.name ? 'contact-name-error' : undefined}
-                          className={errors.name ? 'border-destructive' : undefined}
-                        />
-                        {errors.name && (
-                          <p id="contact-name-error" role="alert" className="text-xs font-medium text-destructive">
-                            {errors.name}
-                          </p>
-                        )}
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="contact-email">{form.emailLabel}</Label>
-                        <Input
-                          id="contact-email"
-                          required
-                          type="email"
-                          value={values.email}
-                          onChange={set('email')}
-                          placeholder={form.emailPlaceholder}
-                          maxLength={120}
-                          autoComplete="email"
-                          aria-invalid={Boolean(errors.email)}
-                          aria-describedby={errors.email ? 'contact-email-error' : undefined}
-                          className={errors.email ? 'border-destructive' : undefined}
-                        />
-                        {errors.email && (
-                          <p id="contact-email-error" role="alert" className="text-xs font-medium text-destructive">
-                            {errors.email}
-                          </p>
-                        )}
-                      </div>
-                    </div>
+              <h2 className="mt-5 font-display text-2xl font-bold text-foreground md:text-3xl">
+                {t.contact.form.title}
+              </h2>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="contact-phone">{form.phoneLabel}</Label>
-                      <Input
-                        id="contact-phone"
-                        type="tel"
-                        value={values.phone}
-                        onChange={set('phone')}
-                        placeholder={form.phonePlaceholder}
-                        maxLength={40}
-                        autoComplete="tel"
-                      />
-                    </div>
+              <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">
+                Задайте вопрос, оставьте пожелание или договоритесь о встрече — мы ответим в течение 1–2 дней. Напишите нам:
+              </p>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="contact-message">{form.messageLabel}</Label>
-                      <Textarea
-                        id="contact-message"
-                        required
-                        value={values.message}
-                        onChange={set('message')}
-                        placeholder={form.messagePlaceholder}
-                        rows={6}
-                        maxLength={2000}
-                        aria-invalid={Boolean(errors.message)}
-                        aria-describedby={errors.message ? 'contact-message-error' : undefined}
-                        className={errors.message ? 'border-destructive' : undefined}
-                      />
-                      {errors.message && (
-                        <p id="contact-message-error" role="alert" className="text-xs font-medium text-destructive">
-                          {errors.message}
-                        </p>
-                      )}
-                    </div>
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                <a
+                  href={CHURCH.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#25D366] px-6 text-base font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#20ba59] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <WhatsappIcon className="h-5 w-5" aria-hidden="true" />
+                  WhatsApp
+                </a>
 
-                    <Button
-                      type="submit"
-                      disabled={sending}
-                      size="lg"
-                      className="w-full rounded-full font-semibold"
-                    >
-                      {sending ? (
-                        c.sending
-                      ) : (
-                        <>
-                          <Send className="h-4 w-4" aria-hidden="true" />
-                          {form.submit}
-                        </>
-                      )}
-                    </Button>
-                  </form>
-                </>
-              )}
+                <a
+                  href={CHURCH.telegramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#229ED9] px-6 text-base font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#1e8bc0] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <Send className="h-5 w-5" aria-hidden="true" />
+                  Telegram
+                </a>
+              </div>
+
+              <div className="mt-8 rounded-2xl border border-border/70 bg-muted/40 p-4 text-xs text-muted-foreground">
+                <p>
+                  Телефон для прямой связи: <a href={CHURCH.phoneHref} className="font-semibold text-foreground underline hover:text-primary">{CHURCH.phoneDisplay}</a>
+                  {' '}· Email: <a href={CHURCH.emailHref} className="font-semibold text-foreground underline hover:text-primary">{CHURCH.email}</a>
+                </p>
+              </div>
             </div>
           </FadeIn>
 

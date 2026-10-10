@@ -114,22 +114,22 @@ export function AboutPage() {
       <section className="bg-secondary/60">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
           <SectionHeading title={t.about.team.title} subtitle={t.about.team.subtitle} />
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-12 flex max-w-md justify-center">
             {t.about.team.members.map((member, i) => (
-              <FadeIn key={member.name} delay={i * 100}>
-                <article className="h-full rounded-3xl border border-border bg-card p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold/40 hover:shadow-md">
-                  <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 font-display text-xl font-extrabold text-primary ring-2 ring-gold/50">
+              <FadeIn key={member.name} delay={i * 100} className="w-full">
+                <article className="h-full rounded-3xl border border-border bg-card p-8 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold/40 hover:shadow-md">
+                  <span className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 font-display text-2xl font-extrabold text-primary ring-4 ring-gold/40">
                     {member.name
                       .split(' ')
                       .map((w) => w.charAt(0))
                       .slice(0, 2)
                       .join('')}
                   </span>
-                  <h3 className="mt-4 font-display text-base font-bold text-foreground">{member.name}</h3>
-                  <span className="mt-2 inline-block rounded-full bg-gold-soft px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-gold-ink">
+                  <h3 className="mt-5 font-display text-xl font-bold text-foreground">{member.name}</h3>
+                  <span className="mt-2 inline-block rounded-full bg-gold-soft px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-gold-ink">
                     {member.role}
                   </span>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{member.desc}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{member.desc}</p>
                 </article>
               </FadeIn>
             ))}

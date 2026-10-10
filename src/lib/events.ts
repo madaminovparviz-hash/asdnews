@@ -16,7 +16,7 @@ const RECURRING = [
   { weekday: 5, time: '09:00', category: 'worship' as const, scheduleIndex: 0 },
   { weekday: 5, time: '10:30', category: 'worship' as const, scheduleIndex: 1 },
   { weekday: 2, time: '18:00', category: 'worship' as const, scheduleIndex: 2 },
-  { weekday: 4, time: '17:00', category: 'youth' as const, scheduleIndex: 3 },
+  { weekday: 5, time: '15:00', category: 'youth' as const, scheduleIndex: 3 },
 ];
 
 interface SpecialEvent {
@@ -202,12 +202,12 @@ export function formatEventDate(date: Date, t: Translation): string {
 /** Approximate duration (minutes) per event type — used for .ics exports. */
 export function getEventDuration(event: LocalizedEvent): number {
   const recMatch = /-rec-(\d)$/.exec(event.id);
-  if (recMatch) return [75, 90, 60, 120][Number(recMatch[1])] ?? 90;
+  if (recMatch) return [75, 90, 60, 180][Number(recMatch[1])] ?? 90;
   return 90; // special gatherings
 }
 
 /** Weekday (0=Mon … 6=Sun) of each schedule item, matching RECURRING order. */
-export const SCHEDULE_WEEKDAYS = [5, 5, 2, 4];
+export const SCHEDULE_WEEKDAYS = [5, 5, 2, 5];
 
 /** Start time ("09:00") and duration (minutes) parsed from a "09:00 – 10:15" range. */
 export function parseTimeRange(range: string): { start: string; duration: number } {

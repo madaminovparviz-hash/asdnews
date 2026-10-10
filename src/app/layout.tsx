@@ -86,9 +86,9 @@ const churchJsonLd = {
     longitude: CHURCH.geo.lng,
   },
   sameAs: [
-    "https://t.me/adventist_dushanbe",
-    "https://instagram.com/adventist.dushanbe",
-    "https://youtube.com/@adventistdushanbe",
+    CHURCH.telegramUrl,
+    CHURCH.whatsappUrl,
+    CHURCH.youtubeUrl,
   ],
 };
 

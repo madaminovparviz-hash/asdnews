@@ -4,8 +4,9 @@ import Image from 'next/image';
 import { Clock, Heart, Mail, MapPin, Phone, Send, Instagram, Youtube } from 'lucide-react';
 import { PAGES, useSite, type PageId } from '@/lib/i18n';
 import { CHURCH } from '@/lib/site';
+import { WhatsappIcon } from './messenger-icons';
 
-const SOCIAL_ICONS = { Telegram: Send, Instagram, YouTube: Youtube } as const;
+const SOCIAL_ICONS = { Telegram: Send, WhatsApp: WhatsappIcon, Instagram, YouTube: Youtube } as const;
 
 export function SiteFooter() {
   const { lang, page, t, navigate } = useSite();
