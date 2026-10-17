@@ -19,6 +19,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.asdtj.org"),
   title: {
     default: "Церковь Адвентистов Седьмого Дня в Душанбе",
     template: "%s — Адвентисты Седьмого Дня Душанбе",
@@ -38,6 +39,7 @@ export const metadata: Metadata = {
     title: "Церковь Адвентистов Седьмого Дня в Душанбе",
     description:
       "Место веры, надежды и любви в сердце Душанбе. Богослужения каждую субботу. Хуш омадед!",
+    url: "https://www.asdtj.org/",
     type: "website",
     locale: "ru_RU",
     alternateLocale: ["tg_TJ"],
@@ -71,7 +73,7 @@ const churchJsonLd = {
   "@type": "Church",
   name: "Церковь Адвентистов Седьмого Дня в Душанбе",
   alternateName: "Калисои Адвентистҳои Рӯзи Ҳафтум дар Душанбе",
-  url: "https://adventist-dushanbe.tj/",
+  url: "https://www.asdtj.org/",
   telephone: CHURCH.phoneHref.replace("tel:", ""),
   email: CHURCH.email,
   address: {

@@ -30,7 +30,7 @@ export function buildEventIcs(event: LocalizedEvent, durationMinutes: number, lo
     'PRODID:-//Adventist Dushanbe//Site//RU',
     'CALSCALE:GREGORIAN',
     'BEGIN:VEVENT',
-    `UID:${event.id}@adventist-dushanbe.tj`,
+    `UID:${event.id}@asdtj.org`,
     `DTSTAMP:${toIcsStamp(new Date())}`,
     `DTSTART:${toIcsStamp(start)}`,
     `DTEND:${toIcsStamp(end)}`,

@@ -23,6 +23,7 @@ import { useSite } from '@/lib/i18n';
 import { SectionHeading } from '@/components/church/section-heading';
 import { FadeIn } from '@/components/church/fade-in';
 import { toast } from 'sonner';
+import { CHURCH } from '@/lib/site';
 
 const TARGET_DATE = new Date('2027-09-01T00:00:00Z').getTime();
 
@@ -261,7 +262,7 @@ export function OneVoicePage() {
                       27 г. н.э. — 2027 г.
                     </span>
                     <h3 className="mt-2 font-display text-xl font-bold text-white">
-                      2000 лет благовестия
+                      {ov.anniversary2000}
                     </h3>
                   </div>
                 </div>
@@ -434,7 +435,7 @@ export function OneVoicePage() {
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border/70 pt-6">
                 <p className="text-xs text-muted-foreground text-center sm:text-left">
-                  Церковь христиан адвентистов седьмого дня в Душанбе • ул. Борбад, 117
+                  {t.meta.brand} {t.meta.brandCity} • {CHURCH.address}
                 </p>
                 <div className="flex gap-2">
                   <button

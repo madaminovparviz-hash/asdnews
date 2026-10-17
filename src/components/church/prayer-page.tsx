@@ -10,7 +10,6 @@ import {
 import { useSite } from '@/lib/i18n';
 import { FadeIn } from './fade-in';
 import { PageHeader } from './section-heading';
-import { PrayerWall } from './prayer-wall';
 import { CHURCH } from '@/lib/site';
 import { WhatsappIcon } from './messenger-icons';
 
@@ -31,11 +30,11 @@ export function PrayerPage() {
               </span>
 
               <h2 className="mt-5 font-display text-2xl font-bold text-foreground md:text-3xl">
-                Отправить молитвенную нужду
+                {t.prayer.form.title}
               </h2>
 
               <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">
-                Ваша просьба будет передана пастору и молитвенной группе. Напишите нам в WhatsApp или Telegram, и мы обязательно поддержим вас в молитве.
+                {t.prayer.messengerDesc}
               </p>
 
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -46,7 +45,7 @@ export function PrayerPage() {
                   className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#25D366] px-6 text-base font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#20ba59] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <WhatsappIcon className="h-5 w-5" aria-hidden="true" />
-                  Написать в WhatsApp
+                  {t.prayer.writeWhatsapp}
                 </a>
 
                 <a
@@ -56,7 +55,7 @@ export function PrayerPage() {
                   className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#229ED9] px-6 text-base font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#1e8bc0] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <Send className="h-5 w-5" aria-hidden="true" />
-                  Написать в Telegram
+                  {t.prayer.writeTelegram}
                 </a>
               </div>
 
@@ -119,8 +118,6 @@ export function PrayerPage() {
           </div>
         </div>
       </section>
-
-      <PrayerWall />
     </>
   );
 }

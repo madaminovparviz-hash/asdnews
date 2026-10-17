@@ -98,7 +98,7 @@ export function ContactPage() {
               </h2>
 
               <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">
-                Задайте вопрос, оставьте пожелание или договоритесь о встрече — мы ответим в течение 1–2 дней. Напишите нам:
+                {t.contact.form.desc}
               </p>
 
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -125,8 +125,8 @@ export function ContactPage() {
 
               <div className="mt-8 rounded-2xl border border-border/70 bg-muted/40 p-4 text-xs text-muted-foreground">
                 <p>
-                  Телефон для прямой связи: <a href={CHURCH.phoneHref} className="font-semibold text-foreground underline hover:text-primary">{CHURCH.phoneDisplay}</a>
-                  {' '}· Email: <a href={CHURCH.emailHref} className="font-semibold text-foreground underline hover:text-primary">{CHURCH.email}</a>
+                  {t.contact.directPhone} <a href={CHURCH.phoneHref} className="font-semibold text-foreground underline hover:text-primary">{CHURCH.phoneDisplay}</a>
+                  {' '}· {t.contact.directEmail} <a href={CHURCH.emailHref} className="font-semibold text-foreground underline hover:text-primary">{CHURCH.email}</a>
                 </p>
               </div>
             </div>
