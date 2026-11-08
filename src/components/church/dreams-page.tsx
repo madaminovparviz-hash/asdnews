@@ -478,26 +478,15 @@ export function DreamsPage() {
             </FadeIn>
           </div>
 
-          {/* Sidenote about dreams in prophecy with scripture photo */}
+          {/* Sidenote about dreams in prophecy */}
           <FadeIn delay={300}>
-            <div className="mt-8 grid items-center overflow-hidden rounded-3xl border border-border bg-card shadow-sm md:grid-cols-12">
-              <div className="relative min-h-[160px] md:col-span-4 md:min-h-full">
-                <Image
-                  src="/images/dreams-scripture.jpg"
-                  alt="Священное Писание"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6 md:col-span-8 md:p-8">
-                <span className="font-display text-sm font-bold text-foreground">
-                  {d.scripturesSection.dreamsTitle}:{' '}
-                </span>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                  {d.scripturesSection.dreamsText}
-                </p>
-              </div>
+            <div className="mt-8 rounded-3xl border border-border/80 bg-card p-6 shadow-sm sm:p-8">
+              <span className="font-display text-base font-bold text-foreground">
+                {d.scripturesSection.dreamsTitle}:{' '}
+              </span>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                {d.scripturesSection.dreamsText}
+              </p>
             </div>
           </FadeIn>
         </div>
